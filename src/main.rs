@@ -141,7 +141,7 @@ fn the_faster_one(mut k: usize) -> usize {
             // pattern: in steps of the next exponent, map to the right N - 1
             // times in steps of current exponent
             for j in (0..k).step_by(next_exponent) {
-               for k in ((j + exponent)..((j + next_exponent).min(k))).step_by(exponent) {
+               for k in ((j + exponent)..((j + next_exponent).min(k + 1))).step_by(exponent) {
                   factors[k] *= i + 1;
                }
             }
