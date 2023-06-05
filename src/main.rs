@@ -127,8 +127,7 @@ fn the_faster_one(mut k: usize) -> usize {
          let biggest_exponent = (k as f64).log(n as f64) as u32;
 
          for i in 1..=biggest_exponent {
-            let exponent      = n.pow(i);
-            let next_exponent = n.pow(i + 1);
+            let step = n.pow(i);
 
             // Imagine K = 81, then from 3..K in steps of 3 the exponents are:
             // 112112113112112113112112114
@@ -140,8 +139,10 @@ fn the_faster_one(mut k: usize) -> usize {
             // What can be observed then, is that they all follow the same
             // pattern: in steps of the next exponent, map to the right N - 1
             // times in steps of current exponent
-            for j in (0..k).step_by(next_exponent) {
-               for k in ((j + exponent)..((j + next_exponent).min(k + 1))).step_by(exponent) {
+            for j in (step..k).step_by(n * step) {
+               let until = j + (n - 1)*step;
+
+               for k in (j..until.min(k + 1)).step_by(step) {
                   factors[k] *= i + 1;
                }
             }
