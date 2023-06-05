@@ -139,7 +139,7 @@ fn the_faster_one(mut k: usize) -> usize {
             // What can be observed then, is that they all follow the same
             // pattern: in steps of the next exponent, map to the right N - 1
             // times in steps of current exponent
-            for j in (step..k).step_by(n * step) {
+            for j in (step..=k).step_by(n * step) {
                let until = j + (n - 1)*step;
 
                for k in (j..until.min(k + 1)).step_by(step) {
