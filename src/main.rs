@@ -132,9 +132,14 @@ fn the_faster_one(mut k: usize) -> usize {
 
             // Imagine K = 81, then from 3..K in steps of 3 the exponents are:
             // 112112113112112113112112114
-            // ^  ^  ^  ^  ^  ^  ^  ^  ^   So, to map all the ones, we have to
-            //                             iterate in steps of next_exponent
-            //                             and then to the right N - 1 times
+            // The exponents can be decomposed individually:
+            // 11 11 11 11 11 11 11 11 11
+            //   2  2     2  2     2  2
+            //         3        3
+            //                           4
+            // What can be observed then, is that they all follow the same
+            // pattern: in steps of the next exponent, map to the right N - 1
+            // times in steps of current exponent
             for j in (0..k).step_by(next_exponent) {
                for k in ((j + exponent)..((j + next_exponent).min(k))).step_by(exponent) {
                   factors[k] *= i + 1;
