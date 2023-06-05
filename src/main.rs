@@ -135,19 +135,10 @@ fn the_faster_one(mut k: usize) -> usize {
             // ^  ^  ^  ^  ^  ^  ^  ^  ^   So, to map all the ones, we have to
             //                             iterate in steps of next_exponent
             //                             and then to the right N - 1 times
-            let steps = (k as f64) / (next_exponent as f64);
-
-            for j in 0..steps as usize {
-               for k in 1..n {
-                  factors[j * next_exponent + k * exponent] *= i + 1;
+            for j in (0..k).step_by(next_exponent) {
+               for k in ((j + exponent)..((j + next_exponent).min(k))).step_by(exponent) {
+                  factors[k] *= i + 1;
                }
-            }
-
-            // Since we map N - 1 exponents at once, it's possible in the loop
-            // above this would go past the end of the array, so we map the left
-            // over exponents here
-            for k in 1..=((n as f64) * steps.fract()) as usize {
-               factors[steps as usize * next_exponent + k * exponent] *= i + 1;
             }
          }
       }
