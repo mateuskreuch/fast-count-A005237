@@ -113,8 +113,11 @@ That is, for N = 2, the first four exponents are 1, 2, 1 and 3:
 6 = 2^1 (+ 3^1)
 8 = 2^3
 
-Since this is concatenation, it's very easily parallelizable. The current code
-does not go that far, but the structure is there.
+It is important to notice that this pattern cannot be stored in number form in
+a number system with a finite base, as it will break once it reaches that base.
+
+Regardless, since this is concatenation it's very easily parallelizable.
+The current code does not go that far, but the structure is there.
 */
 fn the_faster_one(mut k: usize) -> usize {
    k += 1;
