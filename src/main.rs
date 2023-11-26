@@ -96,15 +96,15 @@ fn find_exponent(mut n: usize, factor: usize) -> usize {
 There's only one bottleneck remaining: finding the exponent. There's a trick 
 here too, because the sequence of exponents is given by the recurrence:
 
-             .----------- n - 1 -------------.
-   y(f, n) = y(f - 1) + y(f - 1) ...+ y(f - 1) + (y(f - 1) + 1)
-   y(0, _) = 1
+                 <------- n - 1 times -------->
+   ε(n, f + 1) = ε(n, f) ⧺ ε(n, f) ...⧺ ε(n, f) ⧺ (ε(n, f) + 1)
+   ε(n, 0) = 1
 
-Where + means concatenation, not sum. For example:
+Where ⧺ means concatenation, not sum. For example:
 
-y(_, 2) = 1, 12, 1213, 12131214, 1213121412131215...
-y(_, 3) = 1, 112, 112112113, 112112113112112113112112114...
-y(_, 5) = 1, 11112, 1111211112111121111211113...
+ε(2, _) = 1, 12, 1213, 12131214, 1213121412131215...
+ε(3, _) = 1, 112, 112112113, 112112113112112113112112114...
+ε(5, _) = 1, 11112, 1111211112111121111211113...
 
 That is, for N = 2, the first four exponents are 1, 2, 1 and 3:
 
