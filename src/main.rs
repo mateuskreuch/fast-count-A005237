@@ -3,10 +3,13 @@ use std::time::SystemTime;
 //----------------------------------------------------------------------------//
 
 fn the_naive_one(mut k: usize) -> usize {
+   // Although the sequence tests forwards, that is, if σ(N) = σ(N + 1), later
+   // it will be more efficient to test backwards. To correct for this, we must
+   // shift the range from [1, k] to [2, k + 1]
    k += 1;
 
    let mut count = 0;
-   let mut last_amount_of_factors = 0;
+   let mut last_amount_of_factors = 1;
    
    for n in 2..=k {
       let amount_of_factors = count_factors(n);
@@ -127,7 +130,7 @@ fn the_faster_one(mut k: usize) -> usize {
 
    for n in 2..=k {
       if factors[n] == 1 {
-         let biggest_exponent = (k as f64).log(n as f64) as u32;
+         let biggest_exponent = k.checked_ilog(n).unwrap();
 
          for i in 1..=biggest_exponent {
             let step = n.pow(i);
@@ -163,6 +166,17 @@ fn the_faster_one(mut k: usize) -> usize {
 //----------------------------------------------------------------------------//
 
 fn main() {
+   // check correctness
+   for n in 2..=1000 {
+      let a = the_naive_one(n);
+      let b = the_fast_one(n);
+      let c = the_faster_one(n);
+
+      if !(a == b && b == c) {
+         println!("algorithms dont match: {0} {1} {2} at {3}", a, b, c, n);
+      }
+   }
+
    let x = 1000000;
    let t = SystemTime::now();
 
