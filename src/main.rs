@@ -3,9 +3,9 @@ use std::time::SystemTime;
 //----------------------------------------------------------------------------//
 
 fn the_naive_one(mut k: usize) -> usize {
-   // Although the sequence tests forwards, that is, if σ(N) = σ(N + 1), later
-   // it will be more efficient to test backwards. To correct for this, we must
-   // shift the range from [1, k] to [2, k + 1]
+   // Although A005237 tests forwards, that is, if σ(N) = σ(N + 1), it is more
+   // efficient to test backwards. To correct for this, we must shift the range
+   // from [1, k] to [2, k + 1]
    k += 1;
 
    let mut count = 0;
@@ -53,7 +53,7 @@ Then the amount of divisors is given by:
    σ(x) = (y1 + 1) * (y2 + 1) ...* (yn + 1)
 
 With this, we simply need an array to keep the amount of factors of every number
-from 0 to K. At each prime number P we iterate through its multiples M, find the
+from 1 to K. At each prime number P we iterate through its multiples M, find the
 exponent of P that composes M, and apply the formula. The order in which we do
 this doesn't matter, since multiplication is commutative.
 
